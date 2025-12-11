@@ -6,11 +6,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +26,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'avatar_id',
+        'username',
         'email',
         'password',
     ];
@@ -44,5 +53,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the avatar associated with the user.
+     */
+    public function avatar()
+    {
+        return $this->belongsTo(Avatar::class, 'avatar_id', 'avatar_id');
+    }
+
+    /**
+     * Get the collections for the user.
+     */
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'user_id', 'user_id');
     }
 }
