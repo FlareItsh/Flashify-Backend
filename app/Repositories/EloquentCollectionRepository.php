@@ -75,4 +75,25 @@ class EloquentCollectionRepository implements CollectionRepositoryInterface
     {
         return Collection::where('user_id', $userId)->with('flashcards')->paginate($perPage);
     }
+
+    /**
+     * Get user statistics (collection count and flashcard count).
+     *
+     * @param int $userId
+     * @return array<string, int>
+     */
+    public function getUserStats(int $userId): array
+    {
+        $collectionsCount = Collection::where('user_id', $userId)->count();
+
+        $flashcardsCount = Collection::where('user_id', $userId)
+            ->withCount('flashcards')
+            ->get()
+            ->sum('flashcards_count');
+
+        return [
+            'collections_count' => $collectionsCount,
+            'flashcards_count' => $flashcardsCount,
+        ];
+    }
 }

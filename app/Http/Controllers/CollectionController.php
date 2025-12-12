@@ -27,10 +27,12 @@ class CollectionController extends Controller
     {
         $perPage = $request->get('per_page', 15);
         $collections = $this->collectionRepository->paginateByUserId($request->user()->user_id, $perPage);
+        $stats = $this->collectionRepository->getUserStats($request->user()->user_id);
 
         return response()->json([
             'status' => 'success',
-            'data' => $collections
+            'data' => $collections,
+            'stats' => $stats
         ]);
     }
 
@@ -44,6 +46,7 @@ class CollectionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'tags' => 'nullable|array',
             'priority_level' => 'nullable|in:low,medium,high',
         ]);
@@ -94,9 +97,12 @@ class CollectionController extends Controller
             ], 403);
         }
 
+        // Update last_studied_at timestamp
+        $collection->update(['last_studied_at' => now()]);
+
         return response()->json([
             'status' => 'success',
-            'data' => $collection
+            'data' => $collection->fresh()
         ]);
     }
 
@@ -128,6 +134,7 @@ class CollectionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'name' => 'sometimes|string|max:255',
+            'description' => 'nullable|string',
             'tags' => 'nullable|array',
             'priority_level' => 'sometimes|in:low,medium,high',
         ]);

@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id('collection_id');
             $table->unsignedBigInteger('user_id');
             $table->string('name');
+            $table->text('description')->nullable();
             $table->json('tags')->nullable();
             $table->enum('priority_level', ['low', 'medium', 'high'])->default('medium');
+            $table->timestamp('last_studied_at')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

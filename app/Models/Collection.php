@@ -28,8 +28,10 @@ class Collection extends Model
     protected $fillable = [
         'user_id',
         'name',
+        'description',
         'tags',
         'priority_level',
+        'last_studied_at',
     ];
 
     /**
@@ -39,6 +41,7 @@ class Collection extends Model
      */
     protected $casts = [
         'tags' => 'array',
+        'last_studied_at' => 'datetime',
     ];
 
     /**

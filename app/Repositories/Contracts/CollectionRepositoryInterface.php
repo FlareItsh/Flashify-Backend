@@ -56,4 +56,12 @@ interface CollectionRepositoryInterface
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public function paginateByUserId(int $userId, int $perPage = 15): \Illuminate\Contracts\Pagination\LengthAwarePaginator;
+
+    /**
+     * Get user statistics (collection count and flashcard count).
+     *
+     * @param int $userId
+     * @return array<string, int>
+     */
+    public function getUserStats(int $userId): array;
 }
