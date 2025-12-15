@@ -143,20 +143,22 @@ EOF
 # Create startup script
 COPY <<'EOF' /usr/local/bin/start.sh
 #!/bin/bash
-set -e
 
 echo "Starting Laravel application..."
 
 # Run migrations if AUTO_MIGRATE is set
 if [ "${AUTO_MIGRATE}" = "true" ]; then
     echo "Running migrations..."
-    php artisan migrate --force
+    php artisan migrate --force || {
+        echo "WARNING: Migration failed. Continuing startup..."
+        echo "Please check your database connection settings."
+    }
 fi
 
 # Cache configuration for better performance
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+php artisan config:cache || echo "Config cache failed"
+php artisan route:cache || echo "Route cache failed"
+php artisan view:cache || echo "View cache failed"
 
 # Start supervisor
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
