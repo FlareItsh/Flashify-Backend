@@ -73,6 +73,9 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
+# Create supervisor log directory
+RUN mkdir -p /var/log/supervisor
+
 # Configure nginx
 COPY <<'EOF' /etc/nginx/http.d/default.conf
 server {
@@ -143,8 +146,15 @@ EOF
 # Create startup script
 COPY <<'EOF' /usr/local/bin/start.sh
 #!/bin/bash
+set -e
 
 echo "Starting Laravel application..."
+
+# Debug: Show database connection settings
+echo "Database Connection: ${DB_CONNECTION}"
+echo "Database Host: ${DB_HOST}"
+echo "Database Port: ${DB_PORT}"
+echo "Database Name: ${DB_DATABASE}"
 
 # Run migrations if AUTO_MIGRATE is set
 if [ "${AUTO_MIGRATE}" = "true" ]; then
