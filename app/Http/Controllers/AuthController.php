@@ -87,4 +87,45 @@ class AuthController extends Controller
             'data' => $request->user()->load(['avatar', 'collections'])
         ]);
     }
+
+    /**
+     * Change password for authenticated user.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function changePassword(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $user = $request->user();
+
+        // Verify current password
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Current password is incorrect'
+            ], 401);
+        }
+
+        // Update password
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Password changed successfully'
+        ]);
+    }
 }
