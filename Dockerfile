@@ -56,11 +56,14 @@ WORKDIR /var/www/html
 # Copy composer files
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
+# Install PHP dependencies (without scripts to avoid needing artisan)
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress --no-scripts
 
 # Copy application files
 COPY . .
+
+# Run composer scripts now that application files are present
+RUN composer dump-autoload --optimize --no-dev
 
 # Copy built frontend assets from frontend-builder stage
 COPY --from=frontend-builder /app/public/build ./public/build
