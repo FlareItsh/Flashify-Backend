@@ -165,6 +165,15 @@ if [ "${AUTO_MIGRATE}" = "true" ]; then
     }
 fi
 
+# Run seeders if AUTO_SEED is set
+if [ "${AUTO_SEED}" = "true" ]; then
+    echo "Running database seeders..."
+    php artisan db:seed --force || {
+        echo "WARNING: Seeding failed. Continuing startup..."
+        echo "Please check your database connection settings."
+    }
+fi
+
 # Cache configuration for better performance
 php artisan config:cache || echo "Config cache failed"
 php artisan route:cache || echo "Route cache failed"

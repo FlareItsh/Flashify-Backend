@@ -47,7 +47,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users,username',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'avatar_id' => 'nullable|exists:avatars,avatar_id',
+            'avatar_id' => 'nullable|integer|min:1|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -118,11 +118,26 @@ class UserController extends Controller
             ], 404);
         }
 
-        $validator = Validator::make($request->all(), [
+        $user = $this->userRepository->findById($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        // Ensure avatar_id is an integer if provided
+        $data = $request->all();
+        if (isset($data['avatar_id'])) {
+            $data['avatar_id'] = (int) $data['avatar_id'];
+        }
+
+        $validator = Validator::make($data, [
             'username' => ['sometimes', 'string', 'max:255', Rule::unique('users', 'username')->ignore($user->user_id, 'user_id')],
             'email' => ['sometimes', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->user_id, 'user_id')],
             'password' => 'sometimes|string|min:8|confirmed',
-            'avatar_id' => 'nullable|exists:avatars,avatar_id',
+            'avatar_id' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {
@@ -132,8 +147,6 @@ class UserController extends Controller
                 'errors' => $validator->errors()
             ], 422);
         }
-
-        $this->userRepository->update($user, $validator->validated());
 
         return response()->json([
             'status' => 'success',

@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AvatarSeeder::class,
-            UserSeeder::class,
-            CollectionSeeder::class,
-            FlashcardSeeder::class,
+            // UserSeeder::class,
+            // CollectionSeeder::class,
+            // FlashcardSeeder::class,
         ]);
     }
 }

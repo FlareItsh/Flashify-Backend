@@ -9,6 +9,8 @@ use App\Repositories\Contracts\CollectionRepositoryInterface;
 use App\Repositories\EloquentCollectionRepository;
 use App\Repositories\Contracts\FlashcardRepositoryInterface;
 use App\Repositories\EloquentFlashcardRepository;
+use App\Repositories\Contracts\AvatarRepositoryInterface;
+use App\Repositories\EloquentAvatarRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -20,6 +22,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, EloquentUserRepository::class);
         $this->app->bind(CollectionRepositoryInterface::class, EloquentCollectionRepository::class);
         $this->app->bind(FlashcardRepositoryInterface::class, EloquentFlashcardRepository::class);
+        $this->app->bind(AvatarRepositoryInterface::class, EloquentAvatarRepository::class);
     }
 
     /**

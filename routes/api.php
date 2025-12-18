@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\FlashcardController;
+use App\Http\Controllers\AvatarController;
 use Illuminate\Http\Request;
 
 // Public routes - registration and login
@@ -25,6 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     Route::get('users/username/{username}', [UserController::class, 'getByUsername']);
     Route::post('users/email', [UserController::class, 'getByEmail']);
+
+    // Avatar routes
+    Route::get('avatars', [AvatarController::class, 'index']);
 
     // Collection routes
     Route::get('collections', [CollectionController::class, 'index']);
