@@ -148,6 +148,9 @@ class UserController extends Controller
             ], 422);
         }
 
+        // Update the user
+        $this->userRepository->update($user, $validator->validated());
+
         return response()->json([
             'status' => 'success',
             'message' => 'User updated successfully',
