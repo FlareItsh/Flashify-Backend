@@ -156,8 +156,14 @@ echo "Database Host: ${DB_HOST}"
 echo "Database Port: ${DB_PORT}"
 echo "Database Name: ${DB_DATABASE}"
 
-# Run migrations if AUTO_MIGRATE is set
-if [ "${AUTO_MIGRATE}" = "true" ]; then
+# Run fresh migration if AUTO_MIGRATE_FRESH is set (drops all data!)
+if [ "${AUTO_MIGRATE_FRESH}" = "true" ]; then
+    echo "Running fresh migration (WARNING: This will drop all data!)..."
+    php artisan migrate:fresh --force --seed || {
+        echo "WARNING: Fresh migration failed. Continuing startup..."
+    }
+# Otherwise, run normal migration if AUTO_MIGRATE is set
+elif [ "${AUTO_MIGRATE}" = "true" ]; then
     echo "Running migrations..."
     php artisan migrate --force || {
         echo "WARNING: Migration failed. Continuing startup..."
@@ -165,8 +171,8 @@ if [ "${AUTO_MIGRATE}" = "true" ]; then
     }
 fi
 
-# Run seeders if AUTO_SEED is set
-if [ "${AUTO_SEED}" = "true" ]; then
+# Run seeders only if not using fresh migration and AUTO_SEED is set
+if [ "${AUTO_SEED}" = "true" ] && [ "${AUTO_MIGRATE_FRESH}" != "true" ]; then
     echo "Running database seeders..."
     php artisan db:seed --force || {
         echo "WARNING: Seeding failed. Continuing startup..."
