@@ -82,9 +82,10 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
+        // Load only avatar by default to keep this endpoint fast on low-powered hosts.
         return response()->json([
             'status' => 'success',
-            'data' => $request->user()->load(['avatar', 'collections'])
+            'data' => $request->user()->load('avatar')
         ]);
     }
 
