@@ -1,3 +1,5 @@
+# Flashify Backend
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -7,56 +9,529 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+<p align="center">
+<img src="https://img.shields.io/badge/PHP-8.1+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+<img src="https://img.shields.io/badge/Laravel-12-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+<img src="https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+<img src="https://img.shields.io/badge/Vue.js-3-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white" alt="Vue.js">
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Features
 
--   [Simple, fast routing engine](https://laravel.com/docs/routing).
--   [Powerful dependency injection container](https://laravel.com/docs/container).
--   Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
--   Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
--   Database agnostic [schema migrations](https://laravel.com/docs/migrations).
--   [Robust background job processing](https://laravel.com/docs/queues).
--   [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+-   🔐 **Secure Authentication**: JWT-based authentication with Laravel Sanctum
+-   📚 **Flashcard Management**: Create, read, update, and delete flashcards organized in collections
+-   👤 **User Profiles**: Customizable user profiles with avatar selection
+-   🏷️ **Tagging System**: Organize collections with tags and priority levels
+-   📊 **Statistics**: Track your learning progress with collection and flashcard stats
+-   🐳 **Docker Support**: Easy deployment with containerization
+-   📱 **RESTful API**: Clean, well-documented API endpoints
+-   🧪 **Testing**: Comprehensive test suite for reliability
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🏗️ Architecture
 
-## Learning Laravel
+![Architecture](architecture.png)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Flashify Backend is the API server for the Flashify flashcard maker application, built with Laravel. It provides RESTful endpoints for managing users, collections, flashcards, and avatars. This backend handles authentication, data storage, and business logic for the flashcard creation and management system.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Frontend
 
-## Laravel Sponsors
+The frontend for this application can be found at [Flashify Frontend](https://github.com/FlareItsh/Flashify.git).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Prerequisites
 
-### Premium Partners
+To simplify the setup process, especially on Windows, we recommend using XAMPP, which provides PHP, MySQL, and Apache in a single package. Alternatives include WAMP, MAMP, or Laragon.
 
--   **[Vehikl](https://vehikl.com)**
--   **[Tighten Co.](https://tighten.co)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel)**
--   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
--   **[Redberry](https://redberry.international/laravel-development)**
--   **[Active Logic](https://activelogic.com)**
+Before you begin, ensure you have the following installed on your system:
 
-## Contributing
+-   **PHP**: Version 8.1 or higher (check with `php --version`)
+-   **Composer**: PHP dependency manager (check with `composer --version`)
+-   **Node.js and npm**: For frontend assets (optional)
+-   **MySQL or another supported database**
+-   **Git**: For cloning the repository
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Installation
 
-## Code of Conduct
+1. **Clone the repository**:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    ```sh
+    git clone https://github.com/FlareItsh/Flashify-Backend.git
+    cd Flashify-Backend
+    ```
 
-## Security Vulnerabilities
+2. **Install PHP dependencies**:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    ```sh
+    composer install
+    ```
 
-## License
+3. **Install Node.js dependencies (optional)**:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    ```sh
+    npm install
+    ```
+
+4. **Environment Configuration**:
+
+    - Copy the `.env.example` file to `.env`:
+        ```sh
+        cp .env.example .env
+        ```
+    - Update the `.env` file with your database credentials and other settings.
+
+5. **Generate Application Key**:
+
+    ```sh
+    php artisan key:generate
+    ```
+
+6. **Run Database Migrations**:
+
+    ```sh
+    php artisan migrate
+    ```
+
+7. **Seed the Database (optional but needed to retrieve and load avatars)**:
+    ```sh
+    php artisan db:seed
+    ```
+
+## Running Locally
+
+To start the development server:
+
+```sh
+php artisan serve
+```
+
+The API will be available at `http://localhost:8000`.
+
+## Additional Commands
+
+-   **Run tests**: `php artisan test`
+
+## API Documentation
+
+The Flashify Backend provides a RESTful API for managing users, collections, and flashcards. All protected endpoints require authentication via Bearer token in the `Authorization` header.
+
+### Authentication
+
+#### Register User
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/register`
+-   **Request Body**:
+    ```json
+    {
+        "username": "string",
+        "email": "string",
+        "password": "string",
+        "password_confirmation": "string",
+        "avatar_id": "integer (optional, 1-20)"
+    }
+    ```
+-   **Response (Success)**:
+    ```json
+    {
+      "status": "success",
+      "message": "User created successfully",
+      "data": {
+        "user_id": 1,
+        "username": "example",
+        "email": "user@example.com",
+        "avatar": {...}
+      }
+    }
+    ```
+-   **Response (Validation Error)**:
+    ```json
+    {
+        "status": "error",
+        "message": "Validation failed",
+        "errors": {
+            "email": ["The email has already been taken."]
+        }
+    }
+    ```
+
+#### Login
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/login`
+-   **Request Body**:
+    ```json
+    {
+        "login": "string (username or email)",
+        "password": "string"
+    }
+    ```
+-   **Response (Success)**:
+    ```json
+    {
+      "status": "success",
+      "message": "Login successful",
+      "data": {
+        "user": {...},
+        "token": "bearer_token_here",
+        "token_type": "Bearer"
+      }
+    }
+    ```
+
+#### Logout
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/logout`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Logged out successfully"
+    }
+    ```
+
+#### Get Authenticated User
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/me`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "user_id": 1,
+        "username": "example",
+        "email": "user@example.com",
+        "avatar": {...},
+        "collections": [...]
+      }
+    }
+    ```
+
+#### Change Password
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/change-password`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**:
+    ```json
+    {
+        "current_password": "string",
+        "password": "string",
+        "password_confirmation": "string"
+    }
+    ```
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Password changed successfully"
+    }
+    ```
+
+### Users
+
+#### List Users
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/users?per_page=15`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "current_page": 1,
+        "data": [...],
+        "per_page": 15,
+        "total": 100
+      }
+    }
+    ```
+
+#### Get User by ID
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/users/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "user_id": 1,
+        "username": "example",
+        "email": "user@example.com",
+        "avatar": {...},
+        "collections": [...]
+      }
+    }
+    ```
+
+#### Update User
+
+-   **Method**: `PUT` or `PATCH`
+-   **Endpoint**: `/api/users/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**:
+    ```json
+    {
+        "username": "string (optional)",
+        "email": "string (optional)",
+        "avatar_id": "integer (optional)"
+    }
+    ```
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "message": "User updated successfully",
+      "data": {...}
+    }
+    ```
+
+#### Delete User
+
+-   **Method**: `DELETE`
+-   **Endpoint**: `/api/users/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "User deleted successfully"
+    }
+    ```
+
+#### Get User by Username
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/users/username/{username}`
+-   **Headers**: `Authorization: Bearer {token}`
+
+#### Get User by Email
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/users/email`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**:
+    ```json
+    {
+        "email": "string"
+    }
+    ```
+
+### Avatars
+
+#### List Avatars
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/avatars`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "data": [
+            {
+                "avatar_id": 1,
+                "avatar_path": "/avatars/avatar1.png"
+            }
+        ]
+    }
+    ```
+
+### Collections
+
+#### List Collections
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/collections?per_page=15`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "current_page": 1,
+        "data": [...],
+        "per_page": 15,
+        "total": 10
+      },
+      "stats": {
+        "total_collections": 10,
+        "total_flashcards": 50
+      }
+    }
+    ```
+
+#### Create Collection
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/collections`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**:
+    ```json
+    {
+        "name": "string",
+        "description": "string (optional)",
+        "tags": ["array", "optional"],
+        "priority_level": "low|medium|high (optional)"
+    }
+    ```
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Collection created successfully",
+        "data": {
+            "collection_id": 1,
+            "name": "My Collection",
+            "flashcards": []
+        }
+    }
+    ```
+
+#### Get Collection
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/collections/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "collection_id": 1,
+        "name": "My Collection",
+        "flashcards": [...]
+      }
+    }
+    ```
+
+#### Update Collection
+
+-   **Method**: `PUT` or `PATCH`
+-   **Endpoint**: `/api/collections/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**: Same as create, all fields optional
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "message": "Collection updated successfully",
+      "data": {...}
+    }
+    ```
+
+#### Delete Collection
+
+-   **Method**: `DELETE`
+-   **Endpoint**: `/api/collections/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Collection deleted successfully"
+    }
+    ```
+
+### Flashcards
+
+#### List Flashcards in Collection
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/collections/{collectionId}/flashcards?per_page=15`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "data": {
+        "current_page": 1,
+        "data": [...],
+        "per_page": 15,
+        "total": 20
+      }
+    }
+    ```
+
+#### Create Flashcard
+
+-   **Method**: `POST`
+-   **Endpoint**: `/api/collections/{collectionId}/flashcards`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**:
+    ```json
+    {
+        "front": "string",
+        "back": "string",
+        "hint": "string (optional)",
+        "explaination": "string (optional)"
+    }
+    ```
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Flashcard created successfully",
+        "data": {
+            "flashcard_id": 1,
+            "front": "Question",
+            "back": "Answer"
+        }
+    }
+    ```
+
+#### Get Flashcard
+
+-   **Method**: `GET`
+-   **Endpoint**: `/api/collections/{collectionId}/flashcards/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "data": {
+            "flashcard_id": 1,
+            "front": "Question",
+            "back": "Answer",
+            "hint": "Hint",
+            "explaination": "Explanation"
+        }
+    }
+    ```
+
+#### Update Flashcard
+
+-   **Method**: `PUT` or `PATCH`
+-   **Endpoint**: `/api/collections/{collectionId}/flashcards/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Request Body**: Same as create, all fields optional
+-   **Response**:
+    ```json
+    {
+      "status": "success",
+      "message": "Flashcard updated successfully",
+      "data": {...}
+    }
+    ```
+
+#### Delete Flashcard
+
+-   **Method**: `DELETE`
+-   **Endpoint**: `/api/collections/{collectionId}/flashcards/{id}`
+-   **Headers**: `Authorization: Bearer {token}`
+-   **Response**:
+    ```json
+    {
+        "status": "success",
+        "message": "Flashcard deleted successfully"
+    }
+    ```
 
 ## Docker Deployment
 
@@ -79,3 +554,11 @@ The application includes seeders for:
 -   Flashcards (sample flashcards)
 
 When `AUTO_SEED=true`, all seeders will run automatically during container startup, ensuring your production database has the necessary initial data.
+
+## Contributing
+
+Thank you for considering contributing to Flashify Backend! Please follow the standard Laravel contribution guidelines.
+
+## License
+
+The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
